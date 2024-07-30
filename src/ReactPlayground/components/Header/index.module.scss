@@ -1,0 +1,21 @@
+.header {
+  height: 50px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #000;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+
+    img {
+      height: 24px;
+      margin-right: 10px;
+    }
+  }
+}
