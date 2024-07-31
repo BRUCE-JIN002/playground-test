@@ -81,7 +81,6 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
               cancelText="取消"
               onConfirm={(e) => {
                 e?.stopPropagation();
-                console.log("1111111");
                 onRemove();
               }}
             >

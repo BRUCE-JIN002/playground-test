@@ -15,13 +15,21 @@ export default function CodeEditor() {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "101%" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%"
+      }}
+    >
       <FileNameList />
-      <Editor
-        file={file}
-        theme={theme}
-        onChange={debounce(onEditorChange, 500)}
-      />
+      <div style={{ height: "calc(100% - 38px)" }}>
+        <Editor
+          file={file}
+          theme={theme}
+          onChange={debounce(onEditorChange, 500)}
+        />
+      </div>
     </div>
   );
 }

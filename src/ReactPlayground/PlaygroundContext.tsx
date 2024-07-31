@@ -35,7 +35,7 @@ const getFilesFromUrl = () => {
     const hash = uncompress(window.location.hash.slice(1));
     files = JSON.parse(hash);
   } catch (error) {
-    console.log(error);
+    console.warn(error);
   }
   return files;
 };

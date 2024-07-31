@@ -15,3 +15,11 @@
   --primary: #00d8fe;
   --dialog: #2a2a2a;
 }
+
+.wrapper {
+  height: 100vh;
+
+  .contentWrapper {
+    height: calc(100vh - 50px);
+  }
+}

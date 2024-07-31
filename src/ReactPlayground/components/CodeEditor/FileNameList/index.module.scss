@@ -37,10 +37,6 @@
       color: skyblue;
       border-bottom: 3px solid skyblue;
     }
-
-    &:first-child {
-      cursor: text;
-    }
   }
 }
 
@@ -80,9 +76,8 @@
 
 .remove {
   border-radius: 50%;
-  padding: 1px;
+  padding: 0.5px;
   &:hover {
     background-color: #e0e0e060;
-    scale: 1.1;
   }
 }

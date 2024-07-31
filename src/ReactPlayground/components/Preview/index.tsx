@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { PlaygroundContext } from "../../PlaygroundContext";
 import iframeRaw from "./iframe.html?raw";
 import { IMPORT_MAP_FILE_NAME } from "../../files";
@@ -14,7 +14,7 @@ interface MessageData {
 }
 
 export default function Preview() {
-  const { files } = useContext(PlaygroundContext);
+  const { files, theme } = useContext(PlaygroundContext);
   const [compiledCode, setCompiledCode] = useState("");
   const [error, setError] = useState("");
 
@@ -24,24 +24,23 @@ export default function Preview() {
     if (!compilerWorkerRef.current) {
       compilerWorkerRef.current = new CompilerWorker();
       compilerWorkerRef.current.addEventListener("message", ({ data }) => {
-        console.log("worker", data);
         if (data.type === "COMPILED_CODE") {
           setCompiledCode(data.data);
         } else {
-          console.log("error", data);
+          console.warn("error", data);
         }
       });
     }
   }, []);
 
-  useEffect(
-    debounce(() => {
+  useEffect(() => {
+    const fn = debounce(() => {
       compilerWorkerRef.current?.postMessage(files);
-    }, 500),
-    [files]
-  );
+    }, 300);
+    fn();
+  }, [files]);
 
-  const getIframeUrl = () => {
+  const getIframeUrl = useCallback(() => {
     const res = iframeRaw
       .replace(
         '<script type="importmap"></script>',
@@ -52,11 +51,11 @@ export default function Preview() {
         `<script type="module" id="appSrc">${compiledCode}</script>`
       );
     return URL.createObjectURL(new Blob([res], { type: "text/html" }));
-  };
+  }, [compiledCode, files]);
 
   useEffect(() => {
     setIframeUrl(getIframeUrl());
-  }, [files[IMPORT_MAP_FILE_NAME].value, compiledCode]);
+  }, [compiledCode, getIframeUrl]);
 
   const [iframeUrl, setIframeUrl] = useState(getIframeUrl());
 
@@ -82,7 +81,8 @@ export default function Preview() {
           width: "100%",
           height: "100%",
           padding: 0,
-          border: "none"
+          border: "none",
+          backgroundColor: theme === "dark" ? "#1a1a1a" : "#fff"
         }}
       />
       <Message type="error" content={error} />
