@@ -14,10 +14,10 @@ export default function ReactPlayground() {
     <div className={theme} style={{ height: "100vh" }}>
       <Header />
       <Allotment defaultSizes={[100, 100]}>
-        <Allotment.Pane minSize={500}>
+        <Allotment.Pane minSize={0}>
           <CodeEditor />
         </Allotment.Pane>
-        <Allotment.Pane minSize={100}>
+        <Allotment.Pane minSize={0}>
           <Preview />
         </Allotment.Pane>
       </Allotment>

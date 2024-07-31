@@ -2,9 +2,10 @@
   height: 50px;
   padding: 0 20px;
   box-sizing: border-box;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid var(--border);
   background-color: var(--bg);
   color: var(--text);
+  overflow-y: hidden;
 
   display: flex;
   justify-content: space-between;

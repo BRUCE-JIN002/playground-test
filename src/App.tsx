@@ -5,7 +5,7 @@ import { PlaygroundProvider } from "./ReactPlayground/PlaygroundContext";
 function App() {
   return (
     <PlaygroundProvider>
-      <ReactPlayground />;
+      <ReactPlayground />
     </PlaygroundProvider>
   );
 }

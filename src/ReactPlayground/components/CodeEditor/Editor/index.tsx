@@ -63,6 +63,7 @@ export default function Editor(props: Props) {
         minimap: {
           enabled: false
         },
+        overviewRulerBorder: false,
         scrollbar: {
           verticalScrollbarSize: 6,
           horizontalScrollbarSize: 6

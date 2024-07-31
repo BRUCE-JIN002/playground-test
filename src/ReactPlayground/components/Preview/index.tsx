@@ -1,9 +1,10 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { PlaygroundContext } from "../../PlaygroundContext";
-import { compile } from "./compiler";
-import iframeRaw from "./iframeRaw.html?raw";
+import iframeRaw from "./iframe.html?raw";
 import { IMPORT_MAP_FILE_NAME } from "../../files";
 import { Message } from "../Message";
+import CompilerWorker from "./compiler.worker?worker";
+import { debounce } from "lodash-es";
 
 interface MessageData {
   data: {
@@ -15,9 +16,49 @@ interface MessageData {
 export default function Preview() {
   const { files } = useContext(PlaygroundContext);
   const [compiledCode, setCompiledCode] = useState("");
-  const [iframeUrl, setIframeUrl] = useState("");
   const [error, setError] = useState("");
-  const importMapFile = files[IMPORT_MAP_FILE_NAME].value;
+
+  const compilerWorkerRef = useRef<Worker>();
+
+  useEffect(() => {
+    if (!compilerWorkerRef.current) {
+      compilerWorkerRef.current = new CompilerWorker();
+      compilerWorkerRef.current.addEventListener("message", ({ data }) => {
+        console.log("worker", data);
+        if (data.type === "COMPILED_CODE") {
+          setCompiledCode(data.data);
+        } else {
+          console.log("error", data);
+        }
+      });
+    }
+  }, []);
+
+  useEffect(
+    debounce(() => {
+      compilerWorkerRef.current?.postMessage(files);
+    }, 500),
+    [files]
+  );
+
+  const getIframeUrl = () => {
+    const res = iframeRaw
+      .replace(
+        '<script type="importmap"></script>',
+        `<script type="importmap">${files[IMPORT_MAP_FILE_NAME].value}</script>`
+      )
+      .replace(
+        '<script type="module" id="appSrc"></script>',
+        `<script type="module" id="appSrc">${compiledCode}</script>`
+      );
+    return URL.createObjectURL(new Blob([res], { type: "text/html" }));
+  };
+
+  useEffect(() => {
+    setIframeUrl(getIframeUrl());
+  }, [files[IMPORT_MAP_FILE_NAME].value, compiledCode]);
+
+  const [iframeUrl, setIframeUrl] = useState(getIframeUrl());
 
   const handleMessage = (msg: MessageData) => {
     const { type, message } = msg.data;
@@ -32,28 +73,6 @@ export default function Preview() {
       window.removeEventListener("message", handleMessage);
     };
   }, []);
-
-  const getIframeUrl = useCallback(() => {
-    const res = iframeRaw
-      .replace(
-        '<script type="importmap"></script>',
-        `<script type="importmap">${files[IMPORT_MAP_FILE_NAME].value}</script>`
-      )
-      .replace(
-        '<script type="module" id="appSrc"></script>',
-        `<script type="module" id="appSrc">${compiledCode}</script>`
-      );
-    return URL.createObjectURL(new Blob([res], { type: "text/html" }));
-  }, [compiledCode, files]);
-
-  useEffect(() => {
-    setIframeUrl(getIframeUrl());
-  }, [importMapFile, compiledCode, getIframeUrl]);
-
-  useEffect(() => {
-    const res = compile(files);
-    setCompiledCode(res);
-  }, [files]);
 
   return (
     <div style={{ height: "100%" }}>

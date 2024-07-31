@@ -68,7 +68,10 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
         />
       ) : (
         <>
-          <span onDoubleClick={!readonly ? handleDoubleClick : () => {}}>
+          <span
+            className={styles["tabs-item-name"]}
+            onDoubleClick={!readonly ? handleDoubleClick : () => {}}
+          >
             {name}
           </span>
           {!readonly ? (
@@ -78,13 +81,13 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
               cancelText="取消"
               onConfirm={(e) => {
                 e?.stopPropagation();
+                console.log("1111111");
                 onRemove();
               }}
             >
               <span
                 className={styles.remove}
                 style={{ marginLeft: 5, display: "flex" }}
-                onClick={onRemove}
               >
                 <svg width="12" height="12" viewBox="0 0 24 24">
                   <line stroke="#999" x1="18" y1="6" x2="6" y2="18"></line>

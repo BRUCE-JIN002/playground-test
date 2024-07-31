@@ -5,7 +5,8 @@
   height: 38px;
   overflow-x: auto;
   overflow-y: hidden;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border);
+  padding: 0 10px;
   box-sizing: border-box;
 
   color: var(--text);
@@ -53,6 +54,15 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   outline: none;
+}
+
+.tabs-item-name {
+  text-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.tabs-item-close {
+  margin-left: 5px;
 }
 
 .add {
