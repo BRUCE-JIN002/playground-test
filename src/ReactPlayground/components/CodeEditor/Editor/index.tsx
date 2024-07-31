@@ -1,7 +1,8 @@
 import { editor } from "monaco-editor";
 import MonacoEditor, { EditorProps, Monaco } from "@monaco-editor/react";
 import { createATA } from "./ata";
-import { Theme } from "../../../PlaygroundContext";
+import { PlaygroundContext, Theme } from "../../../PlaygroundContext";
+import { useContext } from "react";
 
 export interface EditorFile {
   name: string;
@@ -18,6 +19,7 @@ interface Props {
 
 export default function Editor(props: Props) {
   const { file, theme, onChange, options } = props;
+  const { showMinMap } = useContext(PlaygroundContext);
 
   const handleEditorDidMount = (
     editor: editor.IStandaloneCodeEditor,
@@ -61,7 +63,8 @@ export default function Editor(props: Props) {
         fontSize: 14,
         scrollBeyondLastLine: false,
         minimap: {
-          enabled: false
+          enabled: showMinMap,
+          size: "proportional"
         },
         overviewRulerBorder: false,
         scrollbar: {

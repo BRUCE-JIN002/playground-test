@@ -17,6 +17,8 @@ export interface PlaygroundContext {
   files: Files;
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  showMinMap: boolean;
+  setShowMinMap: (thumbnail: boolean) => void;
   selectedFileName: string;
   setSelectedFileName: (fileName: string) => void;
   setFiles: (files: Files) => void;
@@ -45,6 +47,7 @@ export const PlaygroundProvider = (props: PropsWithChildren) => {
   const [files, setFiles] = useState<Files>(getFilesFromUrl() || initFiles);
   const [selectedFileName, setSelectedFileName] = useState<string>("App.tsx");
   const [theme, setTheme] = useState<Theme>("dark");
+  const [showMinMap, setShowMinMap] = useState<boolean>(false);
 
   const addFile = (name: string) => {
     files[name] = {
@@ -93,6 +96,8 @@ export const PlaygroundProvider = (props: PropsWithChildren) => {
         files,
         selectedFileName,
         theme,
+        showMinMap,
+        setShowMinMap,
         setTheme,
         setSelectedFileName,
         setFiles,

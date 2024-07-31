@@ -9,11 +9,12 @@ import {
   SunOutlined
 } from "@ant-design/icons";
 import copy from "copy-to-clipboard";
-import { message } from "antd";
+import { ConfigProvider, Switch, message } from "antd";
 import { downloadFiles } from "../../utils";
 
 export default function Header() {
-  const { theme, setTheme, files } = useContext(PlaygroundContext);
+  const { theme, setTheme, files, showMinMap, setShowMinMap } =
+    useContext(PlaygroundContext);
 
   return (
     <div className={styles.header}>
@@ -22,6 +23,23 @@ export default function Header() {
         <span>React Playground</span>
       </div>
       <div className={styles.links}>
+        <ConfigProvider
+          theme={{
+            components: {
+              Switch: {
+                colorPrimary: "#76c8e6",
+                colorPrimaryHover: ""
+              }
+            }
+          }}
+        >
+          <Switch
+            checked={showMinMap}
+            checkedChildren="缩略图"
+            unCheckedChildren="缩略图"
+            onChange={() => setShowMinMap(!showMinMap)}
+          />
+        </ConfigProvider>
         {theme === "light" && (
           <MoonOutlined
             title="切换暗色主题"
