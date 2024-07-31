@@ -1,6 +1,7 @@
 import { editor } from "monaco-editor";
 import MonacoEditor, { EditorProps, Monaco } from "@monaco-editor/react";
 import { createATA } from "./ata";
+import { Theme } from "../../../PlaygroundContext";
 
 export interface EditorFile {
   name: string;
@@ -9,13 +10,14 @@ export interface EditorFile {
 }
 
 interface Props {
+  theme: Theme;
   file: EditorFile;
-  onChange: EditorProps["onChange"];
+  onChange?: EditorProps["onChange"];
   options?: editor.IStandaloneEditorConstructionOptions;
 }
 
 export default function Editor(props: Props) {
-  const { file, onChange, options } = props;
+  const { file, theme, onChange, options } = props;
 
   const handleEditorDidMount = (
     editor: editor.IStandaloneCodeEditor,
@@ -54,6 +56,7 @@ export default function Editor(props: Props) {
       value={file.value}
       onChange={onChange}
       onMount={handleEditorDidMount}
+      theme={`vs-${theme}`}
       options={{
         fontSize: 14,
         scrollBeyondLastLine: false,

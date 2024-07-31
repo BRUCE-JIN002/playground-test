@@ -8,8 +8,8 @@
   border-bottom: 1px solid #ddd;
   box-sizing: border-box;
 
-  color: #444;
-  background-color: #fff;
+  color: var(--text);
+  background-color: var(--bg);
 
   &::-webkit-scrollbar {
     height: 1px;
@@ -40,5 +40,39 @@
     &:first-child {
       cursor: text;
     }
+  }
+}
+
+.tabs-item-input {
+  width: 90px;
+  padding: 4px 0 4px 10px;
+  font-size: 13px;
+
+  color: #444;
+  background-color: #ddd;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+.add {
+  display: flex;
+  align-items: center;
+  padding-bottom: 5px;
+
+  font-size: 16px;
+  border-bottom: 3px;
+  cursor: pointer;
+  &:hover {
+    color: skyblue;
+  }
+}
+
+.remove {
+  border-radius: 50%;
+  padding: 1px;
+  &:hover {
+    background-color: #e0e0e060;
+    scale: 1.1;
   }
 }

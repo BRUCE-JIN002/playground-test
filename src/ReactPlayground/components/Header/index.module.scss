@@ -3,6 +3,8 @@
   padding: 0 20px;
   box-sizing: border-box;
   border-bottom: 1px solid #000;
+  background-color: var(--bg);
+  color: var(--text);
 
   display: flex;
   justify-content: space-between;
@@ -17,5 +19,11 @@
       height: 24px;
       margin-right: 10px;
     }
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
   }
 }

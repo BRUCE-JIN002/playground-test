@@ -1,5 +1,5 @@
-import { PropsWithChildren, createContext, useState } from "react";
-import { fileName2Language } from "./utils";
+import { PropsWithChildren, createContext, useEffect, useState } from "react";
+import { compress, fileName2Language, uncompress } from "./utils";
 import { initFiles } from "./files";
 
 export interface File {
@@ -12,8 +12,11 @@ export interface Files {
   [key: string]: File;
 }
 
+export type Theme = "dark" | "light";
 export interface PlaygroundContext {
   files: Files;
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
   selectedFileName: string;
   setSelectedFileName: (fileName: string) => void;
   setFiles: (files: Files) => void;
@@ -26,10 +29,22 @@ export const PlaygroundContext = createContext<PlaygroundContext>({
   selectedFileName: "App.tsx"
 } as PlaygroundContext);
 
+const getFilesFromUrl = () => {
+  let files: Files | undefined;
+  try {
+    const hash = uncompress(window.location.hash.slice(1));
+    files = JSON.parse(hash);
+  } catch (error) {
+    console.log(error);
+  }
+  return files;
+};
+
 export const PlaygroundProvider = (props: PropsWithChildren) => {
   const { children } = props;
-  const [files, setFiles] = useState<Files>(initFiles);
+  const [files, setFiles] = useState<Files>(getFilesFromUrl() || initFiles);
   const [selectedFileName, setSelectedFileName] = useState<string>("App.tsx");
+  const [theme, setTheme] = useState<Theme>("dark");
 
   const addFile = (name: string) => {
     files[name] = {
@@ -42,22 +57,23 @@ export const PlaygroundProvider = (props: PropsWithChildren) => {
 
   const removeFile = (name: string) => {
     delete files[name];
-    setFiles(files);
+    setFiles({ ...files });
   };
 
-  const updateFileName = (oldFieldName: string, newFieldName: string) => {
+  const updateFileName = (oldFileName: string, newFileName: string) => {
     if (
-      !files[oldFieldName] ||
-      newFieldName === undefined ||
-      newFieldName === null
-    )
+      !files[oldFileName] ||
+      newFileName === undefined ||
+      newFileName === null
+    ) {
       return;
-    const { [oldFieldName]: value, ...rest } = files;
+    }
+    const { [oldFileName]: value, ...rest } = files;
     const newFile = {
-      [newFieldName]: {
+      [newFileName]: {
         ...value,
-        language: fileName2Language(newFieldName),
-        name: newFieldName
+        language: fileName2Language(newFileName),
+        name: newFileName
       }
     };
     setFiles({
@@ -66,11 +82,18 @@ export const PlaygroundProvider = (props: PropsWithChildren) => {
     });
   };
 
+  useEffect(() => {
+    const hash = compress(JSON.stringify(files));
+    window.location.hash = hash;
+  }, [files]);
+
   return (
     <PlaygroundContext.Provider
       value={{
         files,
         selectedFileName,
+        theme,
+        setTheme,
         setSelectedFileName,
         setFiles,
         addFile,
