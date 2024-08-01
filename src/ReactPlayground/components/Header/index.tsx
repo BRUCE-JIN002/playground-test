@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { PlaygroundContext } from "../../contests/PlaygroundContext";
+import { PlaygroundContext } from "../../contexts/PlaygroundContext";
 import logo from "./icons/logo.svg";
 import styles from "./index.module.scss";
 import {

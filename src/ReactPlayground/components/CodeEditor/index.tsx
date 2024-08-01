@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Editor from "./Editor";
 import FileNameList from "./FileNameList";
-import { PlaygroundContext } from "../../contests/PlaygroundContext";
+import { PlaygroundContext } from "../../contexts/PlaygroundContext";
 import _ from "lodash";
 import styles from "./index.module.scss";
 

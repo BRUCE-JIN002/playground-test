@@ -1,6 +1,6 @@
 import { strFromU8, strToU8, unzlibSync, zlibSync } from "fflate";
 import JSZip from "jszip";
-import { Files } from "./contests/PlaygroundContext";
+import { File } from "./contexts/PlaygroundContext";
 import saveAs from "file-saver";
 
 export const fileName2Language = (name: string) => {
@@ -27,11 +27,11 @@ export function uncompress(base64: string): string {
   return strFromU8(unzipped);
 }
 
-export async function downloadFiles(files: Files) {
+export async function downloadFiles(files: File[]) {
   const zip = new JSZip();
 
-  Object.keys(files).forEach((name) => {
-    zip.file(name, files[name].value);
+  files.forEach((file) => {
+    zip.file(file.name, file.value);
   });
 
   const blob = await zip.generateAsync({ type: "blob" });
