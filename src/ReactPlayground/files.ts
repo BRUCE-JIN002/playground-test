@@ -14,6 +14,11 @@ export const ENTRY_FILE_NAME = "main.tsx";
 
 export const initFiles: File[] = [
   {
+    name: IMPORT_MAP_FILE_NAME,
+    language: fileName2Language(IMPORT_MAP_FILE_NAME),
+    value: importMap
+  },
+  {
     name: ENTRY_FILE_NAME,
     language: fileName2Language(ENTRY_FILE_NAME),
     value: main
@@ -22,11 +27,6 @@ export const initFiles: File[] = [
     name: APP_COMPONENT_FILE_NAME,
     language: fileName2Language(APP_COMPONENT_FILE_NAME),
     value: App
-  },
-  {
-    name: IMPORT_MAP_FILE_NAME,
-    language: fileName2Language(IMPORT_MAP_FILE_NAME),
-    value: importMap
   },
   {
     name: "App.css",
