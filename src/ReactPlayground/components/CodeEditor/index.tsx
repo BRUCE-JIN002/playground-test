@@ -2,33 +2,33 @@ import { useContext } from "react";
 import Editor from "./Editor";
 import FileNameList from "./FileNameList";
 import { PlaygroundContext } from "../../contests/PlaygroundContext";
-import { debounce } from "lodash-es";
+import _ from "lodash";
+import styles from "./index.module.scss";
 
 export default function CodeEditor() {
   const { files, theme, selectedFileName, setFiles } =
     useContext(PlaygroundContext);
-  const file = files[selectedFileName];
+  const file = files.find((file) => file.name === selectedFileName)!;
 
-  function onEditorChange(value?: string) {
-    files[file.name].value = value!;
-    setFiles({ ...files });
-  }
+  const onEditorChange = _.debounce((value?: string) => {
+    const index = _.findIndex(
+      files,
+      (currentFile) => currentFile.name === file.name
+    );
+    if (index > -1) {
+      files[index] = {
+        ...files[index],
+        value: value!
+      };
+    }
+    setFiles([...files]);
+  }, 500);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%"
-      }}
-    >
+    <div className={styles.editorWrapper}>
       <FileNameList />
-      <div style={{ height: "calc(100% - 38px)" }}>
-        <Editor
-          file={file}
-          theme={theme}
-          onChange={debounce(onEditorChange, 500)}
-        />
+      <div className={styles.editor}>
+        <Editor file={file} theme={theme} onChange={onEditorChange} />
       </div>
     </div>
   );

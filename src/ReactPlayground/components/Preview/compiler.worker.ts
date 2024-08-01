@@ -1,5 +1,5 @@
 import { transform } from "@babel/standalone";
-import { File, Files } from "../../contests/PlaygroundContext";
+import { File } from "../../contests/PlaygroundContext";
 import { ENTRY_FILE_NAME } from "../../files";
 import { PluginObj } from "@babel/core";
 
@@ -18,7 +18,7 @@ export const beforeTransformCode = (filename: string, code: string) => {
 export const babelTransform = (
   filename: string,
   code: string,
-  files: Files
+  files: File[]
 ) => {
   const _code = beforeTransformCode(filename, code);
   let result = "";
@@ -35,26 +35,26 @@ export const babelTransform = (
   return result;
 };
 
-const getModuleFile = (files: Files, modulePath: string) => {
+const getModuleFile = (files: File[], modulePath: string) => {
   let moduleName = modulePath.split("./").pop() || "";
   if (!moduleName.includes(".")) {
-    const realModuleName = Object.keys(files)
-      .filter((key) => {
+    const realModuleName = files
+      .filter(({ name }) => {
         return (
-          key.endsWith(".ts") ||
-          key.endsWith(".tsx") ||
-          key.endsWith(".js") ||
-          key.endsWith(".jsx")
+          name.endsWith(".ts") ||
+          name.endsWith(".tsx") ||
+          name.endsWith(".js") ||
+          name.endsWith(".jsx")
         );
       })
-      .find((key) => {
-        return key.split(".").includes(moduleName);
-      });
+      .find(({ name }) => {
+        return name.split(".").includes(moduleName);
+      })!.name;
     if (realModuleName) {
       moduleName = realModuleName;
     }
   }
-  return files[moduleName];
+  return files.find((file) => file.name === moduleName);
 };
 
 const json2Js = (file: File) => {
@@ -82,7 +82,7 @@ const css2Js = (file: File) => {
   );
 };
 
-function customResolver(files: Files): PluginObj {
+function customResolver(files: File[]): PluginObj {
   return {
     visitor: {
       ImportDeclaration(path) {
@@ -108,9 +108,9 @@ function customResolver(files: Files): PluginObj {
   };
 }
 
-export const compile = (files: Files) => {
-  const main = files[ENTRY_FILE_NAME];
-  return babelTransform(ENTRY_FILE_NAME, main.value, files);
+export const compile = (files: File[]) => {
+  const main = files.find((file) => file.name === ENTRY_FILE_NAME);
+  return babelTransform(ENTRY_FILE_NAME, main!.value, files);
 };
 
 self.addEventListener("message", async ({ data }) => {

@@ -1,0 +1,10 @@
+.editorWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .editor {
+    height: calc(100% - 38px);
+    background-color: var(--bg);
+  }
+}

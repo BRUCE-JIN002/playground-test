@@ -2,6 +2,7 @@ import { PropsWithChildren, createContext, useEffect, useState } from "react";
 import { compress, fileName2Language, uncompress } from "../utils";
 import { initFiles } from "../files";
 import { useToggle } from "ahooks";
+import _ from "lodash";
 
 export interface File {
   name: string;
@@ -9,20 +10,16 @@ export interface File {
   language: string;
 }
 
-export interface Files {
-  [key: string]: File;
-}
-
 export type Theme = "dark" | "light";
 export interface PlaygroundContext {
-  files: Files;
+  files: File[];
   theme: Theme;
   toggleTheme: () => void;
   showMinMap: boolean;
   setShowMinMap: (thumbnail: boolean) => void;
   selectedFileName: string;
   setSelectedFileName: (fileName: string) => void;
-  setFiles: (files: Files) => void;
+  setFiles: (files: File[]) => void;
   addFile: (fileName: string) => void;
   removeFile: (fileName: string) => void;
   updateFileName: (oldFieldName: string, newFieldName: string) => void;
@@ -33,58 +30,54 @@ export const PlaygroundContext = createContext<PlaygroundContext>({
 } as PlaygroundContext);
 
 const getFilesFromUrl = () => {
-  let files: Files | undefined;
+  let files: File[] | undefined;
   try {
     const hash = uncompress(window.location.hash.slice(1));
     files = JSON.parse(hash);
   } catch (error) {
     console.warn(error);
   }
-  console.log("files", files);
   return files;
 };
 
 export const PlaygroundProvider = (props: PropsWithChildren) => {
   const { children } = props;
-  const [files, setFiles] = useState<Files>(getFilesFromUrl() || initFiles);
+  const [files, setFiles] = useState<File[]>(getFilesFromUrl() || initFiles);
   const [selectedFileName, setSelectedFileName] = useState<string>("App.tsx");
   const [theme, { toggle: toggleTheme }] = useToggle<Theme>("dark");
   const [showMinMap, setShowMinMap] = useState<boolean>(false);
 
   const addFile = (name: string) => {
-    files[name] = {
+    const newFile = {
       name,
       language: fileName2Language(name),
       value: ""
     };
-    setFiles({ ...files });
+    setFiles([...files, newFile]);
   };
 
   const removeFile = (name: string) => {
-    delete files[name];
-    setFiles({ ...files });
+    setFiles((preFiles) => {
+      return preFiles.filter((file) => file.name !== name);
+    });
   };
 
   const updateFileName = (oldFileName: string, newFileName: string) => {
     if (
-      !files[oldFileName] ||
-      newFileName === undefined ||
-      newFileName === null
+      _.findIndex(files, (file) => file.name === oldFileName) < 0 ||
+      _.isNil(newFileName)
     ) {
       return;
     }
-    const { [oldFileName]: value, ...rest } = files;
-    const newFile = {
-      [newFileName]: {
-        ...value,
-        language: fileName2Language(newFileName),
-        name: newFileName
-      }
-    };
-    setFiles({
-      ...rest,
-      ...newFile
-    });
+    const index = files.findIndex((file) => file.name === oldFileName);
+    if (index > -1) {
+      files[index] = {
+        ...files[index],
+        name: newFileName,
+        language: fileName2Language(newFileName)
+      };
+    }
+    setFiles([...files]);
   };
 
   useEffect(() => {

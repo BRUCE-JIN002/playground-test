@@ -53,9 +53,9 @@ export default function Editor(props: Props) {
   return (
     <MonacoEditor
       height="100%"
-      path={file.name}
-      language={file.language}
-      value={file.value}
+      path={file?.name}
+      language={file?.language}
+      value={file?.value}
       onChange={onChange}
       onMount={handleEditorDidMount}
       theme={`vs-${theme}`}

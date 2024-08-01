@@ -11,6 +11,7 @@ import AntdConfigContextProvider from "./contests/AntdConfigContext";
 
 export default function ReactPlayground() {
   const { theme } = useContext(PlaygroundContext);
+
   return (
     <AntdConfigContextProvider>
       <div className={classNames(theme, "wrapper")}>

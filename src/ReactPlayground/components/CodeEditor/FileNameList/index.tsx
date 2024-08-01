@@ -26,9 +26,7 @@ export default function FileNameList() {
   const [tabs, setTabs] = useState([""]);
   const [creating, setCreating] = useState(false);
 
-  useEffect(() => {
-    setTabs(Object.keys(files));
-  }, [files]);
+  useEffect(() => setTabs(files.map((item) => item.name)), [files]);
 
   const handleEditComplete = (name: string, preName: string) => {
     updateFileName(preName, name);

@@ -1,10 +1,10 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { PlaygroundContext } from "../../contests/PlaygroundContext";
 import iframeRaw from "./iframe.html?raw";
-import { IMPORT_MAP_FILE_NAME } from "../../files";
 import { Message } from "../Message";
 import CompilerWorker from "./compiler.worker?worker";
-import { debounce } from "lodash-es";
+import _ from "lodash";
+import { IMPORT_MAP_FILE_NAME } from "../../files";
 
 interface MessageData {
   data: {
@@ -34,17 +34,20 @@ export default function Preview() {
   }, []);
 
   useEffect(() => {
-    const fn = debounce(() => {
+    const fn = _.debounce(() => {
       compilerWorkerRef.current?.postMessage(files);
     }, 300);
     fn();
   }, [files]);
 
   const getIframeUrl = useCallback(() => {
+    const importMap = files.find(
+      (file) => file.name === IMPORT_MAP_FILE_NAME
+    )?.value;
     const res = iframeRaw
       .replace(
         '<script type="importmap"></script>',
-        `<script type="importmap">${files[IMPORT_MAP_FILE_NAME].value}</script>`
+        `<script type="importmap">${importMap}</script>`
       )
       .replace(
         '<script type="module" id="appSrc"></script>',
@@ -80,8 +83,8 @@ export default function Preview() {
         style={{
           width: "100%",
           height: "100%",
-          padding: 0,
           border: "none",
+          padding: 0,
           backgroundColor: theme === "dark" ? "#1a1a1a" : "#fff"
         }}
       />
