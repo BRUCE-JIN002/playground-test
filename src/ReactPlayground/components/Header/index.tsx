@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { PlaygroundContext } from "../../PlaygroundContext";
+import { PlaygroundContext } from "../../contests/PlaygroundContext";
 import logo from "./icons/logo.svg";
 import styles from "./index.module.scss";
 import {
@@ -9,7 +9,7 @@ import {
   SunOutlined
 } from "@ant-design/icons";
 import copy from "copy-to-clipboard";
-import { ConfigProvider, Switch, message } from "antd";
+import { Switch, message } from "antd";
 import { downloadFiles } from "../../utils";
 
 export default function Header() {
@@ -23,23 +23,12 @@ export default function Header() {
         <span>React Playground</span>
       </div>
       <div className={styles.links}>
-        <ConfigProvider
-          theme={{
-            components: {
-              Switch: {
-                colorPrimary: "#76c8e6",
-                colorPrimaryHover: ""
-              }
-            }
-          }}
-        >
-          <Switch
-            checked={showMinMap}
-            checkedChildren="缩略图"
-            unCheckedChildren="缩略图"
-            onChange={() => setShowMinMap(!showMinMap)}
-          />
-        </ConfigProvider>
+        <Switch
+          checked={showMinMap}
+          checkedChildren="缩略图"
+          unCheckedChildren="缩略图"
+          onChange={() => setShowMinMap(!showMinMap)}
+        />
         {theme === "light" && (
           <MoonOutlined
             title="切换暗色主题"

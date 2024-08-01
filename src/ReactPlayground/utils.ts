@@ -1,6 +1,6 @@
 import { strFromU8, strToU8, unzlibSync, zlibSync } from "fflate";
 import JSZip from "jszip";
-import { Files } from "./PlaygroundContext";
+import { Files } from "./contests/PlaygroundContext";
 import saveAs from "file-saver";
 
 export const fileName2Language = (name: string) => {

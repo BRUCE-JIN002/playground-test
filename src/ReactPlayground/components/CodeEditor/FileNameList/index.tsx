@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { PlaygroundContext } from "../../../PlaygroundContext";
+import { PlaygroundContext } from "../../../contests/PlaygroundContext";
 import styles from "./index.module.scss";
 import { FileNameItem } from "./FileNameItem";
 import {

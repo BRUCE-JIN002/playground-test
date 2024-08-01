@@ -1,6 +1,6 @@
 import ReactPlayground from "./ReactPlayground/index";
 import "./App.scss";
-import { PlaygroundProvider } from "./ReactPlayground/PlaygroundContext";
+import { PlaygroundProvider } from "./ReactPlayground/contests/PlaygroundContext";
 import { ErrorBoundary } from "react-error-boundary";
 
 function App() {

@@ -1,4 +1,4 @@
-import { Files } from "./PlaygroundContext";
+import { Files } from "./contests/PlaygroundContext";
 import importMap from "./template/import-map.json?raw";
 import AppCss from "./template/App.css?raw";
 import App from "./template/App.tsx?raw";

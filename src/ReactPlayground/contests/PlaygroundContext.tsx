@@ -1,6 +1,6 @@
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
-import { compress, fileName2Language, uncompress } from "./utils";
-import { initFiles } from "./files";
+import { compress, fileName2Language, uncompress } from "../utils";
+import { initFiles } from "../files";
 
 export interface File {
   name: string;

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Editor from "./Editor";
 import FileNameList from "./FileNameList";
-import { PlaygroundContext } from "../../PlaygroundContext";
+import { PlaygroundContext } from "../../contests/PlaygroundContext";
 import { debounce } from "lodash-es";
 
 export default function CodeEditor() {

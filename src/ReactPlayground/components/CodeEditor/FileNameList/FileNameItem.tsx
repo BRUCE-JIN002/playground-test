@@ -83,6 +83,7 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
                 e?.stopPropagation();
                 onRemove();
               }}
+              showCancel={false}
             >
               <span
                 className={styles.remove}
