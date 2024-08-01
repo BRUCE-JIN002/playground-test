@@ -43,7 +43,7 @@ export default function FileNameList() {
 
   const handleRemove = (name: string) => {
     removeFile(name);
-    setSelectedFileName(ENTRY_FILE_NAME);
+    setSelectedFileName(APP_COMPONENT_FILE_NAME);
   };
 
   return (

@@ -44,7 +44,10 @@ export const PlaygroundProvider = (props: PropsWithChildren) => {
   const { children } = props;
   const [files, setFiles] = useState<File[]>(getFilesFromUrl() || initFiles);
   const [selectedFileName, setSelectedFileName] = useState<string>("App.tsx");
-  const [theme, { toggle: toggleTheme }] = useToggle<Theme>("dark");
+  const [theme, { toggle: toggleTheme }] = useToggle<"dark", "light">(
+    "dark",
+    "light"
+  );
   const [showMinMap, setShowMinMap] = useState<boolean>(false);
 
   const addFile = (name: string) => {

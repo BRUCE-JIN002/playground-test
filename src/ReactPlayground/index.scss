@@ -1,4 +1,9 @@
+.base {
+  --icon: #76c8e6;
+}
+
 .light {
+  @extend .base;
   --text: #444;
   --bg: #fff;
   --border: #ccc;
@@ -6,10 +11,11 @@
   --primary: #00d8fe;
   --dialog: #fff;
   --file: #f0f0f0;
-  --icon: #76c8e6;
+  --delete: #ccc;
 }
 
 .dark {
+  @extend .base;
   --text: #fff;
   --bg: #1a1a1a;
   --border: #383838;
@@ -17,7 +23,7 @@
   --primary: #00d8fe;
   --dialog: #2a2a2a;
   --file: #242424;
-  --icon: #76c8e6;
+  --delete: #e0e0e060;
 }
 
 .wrapper {
