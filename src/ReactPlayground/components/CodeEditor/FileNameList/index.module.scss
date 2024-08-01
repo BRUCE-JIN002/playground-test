@@ -37,6 +37,9 @@
       color: skyblue;
       border-bottom: 3px solid skyblue;
     }
+    &:hover {
+      background-color: var(--file);
+    }
   }
 }
 

@@ -1,25 +1,23 @@
-.baseTheme {
-  --icon: #76c8e6;
-}
-
 .light {
-  @extend .baseTheme;
   --text: #444;
   --bg: #fff;
-  --border: #ddd;
+  --border: #ccc;
   --box-shadow: #00000054;
   --primary: #00d8fe;
   --dialog: #fff;
+  --file: #f0f0f0;
+  --icon: #76c8e6;
 }
 
 .dark {
-  @extend .baseTheme;
   --text: #fff;
   --bg: #1a1a1a;
   --border: #383838;
   --box-shadow: #0000;
   --primary: #00d8fe;
   --dialog: #2a2a2a;
+  --file: #242424;
+  --icon: #76c8e6;
 }
 
 .wrapper {

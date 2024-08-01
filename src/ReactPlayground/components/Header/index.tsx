@@ -11,7 +11,6 @@ import {
 import copy from "copy-to-clipboard";
 import { Switch, message } from "antd";
 import { downloadFiles } from "../../utils";
-import classNames from "classnames";
 
 export default function Header() {
   const { theme, toggleTheme, files, showMinMap, setShowMinMap } =
@@ -32,7 +31,7 @@ export default function Header() {
         />
         <span
           title={theme === "light" ? "切换暗色主题" : "切换亮色主题"}
-          className={classNames(styles.theme, styles.operation)}
+          className={styles.operation}
           onClick={() => toggleTheme()}
         >
           {theme === "light" ? <MoonOutlined /> : <SunOutlined />}
