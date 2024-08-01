@@ -1,4 +1,9 @@
+.baseTheme {
+  --icon: #76c8e6;
+}
+
 .light {
+  @extend .baseTheme;
   --text: #444;
   --bg: #fff;
   --border: #ddd;
@@ -8,6 +13,7 @@
 }
 
 .dark {
+  @extend .baseTheme;
   --text: #fff;
   --bg: #1a1a1a;
   --border: #383838;

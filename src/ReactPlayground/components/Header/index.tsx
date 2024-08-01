@@ -11,9 +11,10 @@ import {
 import copy from "copy-to-clipboard";
 import { Switch, message } from "antd";
 import { downloadFiles } from "../../utils";
+import classNames from "classnames";
 
 export default function Header() {
-  const { theme, setTheme, files, showMinMap, setShowMinMap } =
+  const { theme, toggleTheme, files, showMinMap, setShowMinMap } =
     useContext(PlaygroundContext);
 
   return (
@@ -29,22 +30,16 @@ export default function Header() {
           unCheckedChildren="缩略图"
           onChange={() => setShowMinMap(!showMinMap)}
         />
-        {theme === "light" && (
-          <MoonOutlined
-            title="切换暗色主题"
-            className={styles.theme}
-            onClick={() => setTheme("dark")}
-          />
-        )}
-        {theme === "dark" && (
-          <SunOutlined
-            title="切换亮色主题"
-            className={styles.theme}
-            onClick={() => setTheme("light")}
-          />
-        )}
+        <span
+          title={theme === "light" ? "切换暗色主题" : "切换亮色主题"}
+          className={classNames(styles.theme, styles.operation)}
+          onClick={() => toggleTheme()}
+        >
+          {theme === "light" ? <MoonOutlined /> : <SunOutlined />}
+        </span>
         <ShareAltOutlined
           title="分享链接"
+          className={styles.operation}
           onClick={() => {
             copy(window.location.href);
             message.success("分享链接已复制");
@@ -52,6 +47,7 @@ export default function Header() {
         />
         <DownloadOutlined
           title="下载代码"
+          className={styles.operation}
           onClick={async () => {
             await downloadFiles(files);
             message.success("下载完成");

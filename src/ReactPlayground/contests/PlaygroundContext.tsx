@@ -1,6 +1,7 @@
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
 import { compress, fileName2Language, uncompress } from "../utils";
 import { initFiles } from "../files";
+import { useToggle } from "ahooks";
 
 export interface File {
   name: string;
@@ -16,7 +17,7 @@ export type Theme = "dark" | "light";
 export interface PlaygroundContext {
   files: Files;
   theme: Theme;
-  setTheme: (theme: Theme) => void;
+  toggleTheme: () => void;
   showMinMap: boolean;
   setShowMinMap: (thumbnail: boolean) => void;
   selectedFileName: string;
@@ -39,6 +40,7 @@ const getFilesFromUrl = () => {
   } catch (error) {
     console.warn(error);
   }
+  console.log("files", files);
   return files;
 };
 
@@ -46,7 +48,7 @@ export const PlaygroundProvider = (props: PropsWithChildren) => {
   const { children } = props;
   const [files, setFiles] = useState<Files>(getFilesFromUrl() || initFiles);
   const [selectedFileName, setSelectedFileName] = useState<string>("App.tsx");
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, { toggle: toggleTheme }] = useToggle<Theme>("dark");
   const [showMinMap, setShowMinMap] = useState<boolean>(false);
 
   const addFile = (name: string) => {
@@ -98,7 +100,7 @@ export const PlaygroundProvider = (props: PropsWithChildren) => {
         theme,
         showMinMap,
         setShowMinMap,
-        setTheme,
+        toggleTheme,
         setSelectedFileName,
         setFiles,
         addFile,
