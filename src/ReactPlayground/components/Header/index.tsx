@@ -4,6 +4,7 @@ import logo from "./icons/logo.svg";
 import styles from "./index.module.scss";
 import {
   DownloadOutlined,
+  MacCommandOutlined,
   MoonOutlined,
   ShareAltOutlined,
   SunOutlined
@@ -52,6 +53,15 @@ export default function Header() {
         <span>React Playground</span>
       </div>
       <div className={styles.links}>
+        <div className={styles.shortcutContainer}>
+          <div>Formatter</div>
+          <div className={styles.shortcut}>
+            <MacCommandOutlined className={styles.keycode} />
+            <div className={styles.keycode} style={{ marginLeft: 3 }}>
+              J
+            </div>
+          </div>
+        </div>
         <Switch
           checked={showMinMap}
           checkedChildren="缩略图"

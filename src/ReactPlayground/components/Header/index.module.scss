@@ -32,5 +32,34 @@
         color: var(--primary);
       }
     }
+
+    .shortcutContainer {
+      height: 22px;
+      width: 100px;
+      padding: 0 8px;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+      background-color: var(--shortcut);
+      color: #fff;
+
+      .shortcut {
+        display: flex;
+        align-items: center;
+
+        .keycode {
+          outline: 1px solid #00000020;
+          box-shadow: 0px 1px 0px #00000020;
+          width: 16px;
+          height: 16px;
+          border-radius: 2px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
   }
 }
