@@ -17,7 +17,7 @@ const AntdConfigContextProvider = ({
             ? {
                 colorPrimary: "#478ba3",
                 colorPrimaryHover: "skyblue",
-                colorBgElevated: "#1a1a1a",
+                colorBgElevated: "#2d2d2d",
                 colorText: "#fff",
                 fontSize: 12
               }
