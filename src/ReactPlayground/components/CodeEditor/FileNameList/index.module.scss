@@ -1,12 +1,10 @@
 .tabs {
   display: flex;
   align-items: center;
-
   height: 38px;
   overflow-x: auto;
   overflow-y: hidden;
   border-bottom: 1px solid var(--border);
-  padding: 0 10px;
   box-sizing: border-box;
 
   color: var(--text);
@@ -67,10 +65,15 @@
 .add {
   display: flex;
   align-items: center;
-  padding-bottom: 5px;
-
+  padding: 0px 12px 5px 8px;
+  height: 100%;
+  position: sticky;
+  right: 0px;
+  z-index: 9;
+  background-color: inherit;
   font-size: 16px;
-  border-bottom: 3px;
+  box-shadow: -4px 0 8px var(--box-shadow);
+
   cursor: pointer;
   &:hover {
     color: skyblue;
