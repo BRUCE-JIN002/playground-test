@@ -15,7 +15,8 @@ const AntdConfigContextProvider = ({
         token:
           theme === "dark"
             ? {
-                colorPrimary: "skyblue",
+                colorPrimary: "#478ba3",
+                colorPrimaryHover: "skyblue",
                 colorBgElevated: "#1a1a1a",
                 colorText: "#fff",
                 fontSize: 12

@@ -37,7 +37,9 @@ export default function FileNameList() {
   };
 
   const addTab = () => {
-    const newFileName = "Comp" + Math.random().toString().slice(2, 6) + ".tsx";
+    const unTitledIndex =
+      files.filter((item) => item.name.startsWith("Untitled")).length + 1;
+    const newFileName = `Untitled-${unTitledIndex}`;
     addFile(newFileName);
     setSelectedFileName(newFileName);
     setCreating(true);

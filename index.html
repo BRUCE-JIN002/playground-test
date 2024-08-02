@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>React-Playground</title>
   </head>
+  <style>
+    ::view-transition-new(root),
+    ::view-transition-old(root) {
+      animation: none !important;
+    }
+  </style>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

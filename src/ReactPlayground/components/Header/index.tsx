@@ -16,6 +16,35 @@ export default function Header() {
   const { theme, toggleTheme, files, showMinMap, setShowMinMap } =
     useContext(PlaygroundContext);
 
+  const onToggleTheme = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    if (!("startViewTransition" in document)) {
+      toggleTheme();
+      return;
+    }
+    const transiton = document.startViewTransition(toggleTheme);
+    const x = e.clientX;
+    const y = e.clientY;
+    const targetRadius = Math.hypot(
+      Math.max(window.innerWidth, window.innerWidth - x),
+      Math.max(window.innerHeight, window.innerHeight - y)
+    );
+    transiton?.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0% at ${x}px ${y}px)`,
+            `circle(${targetRadius}px at ${x}px ${y}px)`
+          ]
+        },
+        {
+          duration: 500,
+          easing: "ease-in-out",
+          pseudoElement: "::view-transition-new(root)"
+        }
+      );
+    });
+  };
+
   return (
     <div className={styles.header}>
       <div className={styles.logo}>
@@ -32,7 +61,7 @@ export default function Header() {
         <span
           title={theme === "light" ? "切换暗色主题" : "切换亮色主题"}
           className={styles.operation}
-          onClick={() => toggleTheme()}
+          onClick={onToggleTheme}
         >
           {theme === "light" ? <MoonOutlined /> : <SunOutlined />}
         </span>
