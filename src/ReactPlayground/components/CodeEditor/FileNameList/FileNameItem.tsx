@@ -89,7 +89,7 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
       className={classnames(
         styles["tab-item"],
         { [styles.actived]: actived },
-        { [styles.hihgtlingt]: isOver }
+        { [styles.hightlight]: isOver }
       )}
       onClick={onClick}
     >

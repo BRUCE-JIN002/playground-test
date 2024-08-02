@@ -17,7 +17,7 @@ export default function ReactPlayground() {
       <div className={classNames(theme, "wrapper")}>
         <Header />
         <div className={classNames("contentWrapper")}>
-          <Allotment defaultSizes={[100, 100]}>
+          <Allotment defaultSizes={[120, 100]}>
             <Allotment.Pane minSize={0}>
               <CodeEditor />
             </Allotment.Pane>

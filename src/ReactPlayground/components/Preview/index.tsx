@@ -51,10 +51,14 @@ export default function Preview() {
       )
       .replace(
         '<script type="module" id="appSrc"></script>',
-        `<script type="module" id="appSrc">${compiledCode}</script>`
+        `<script type="module" id="appSrc">${compiledCode}</script>
+        <script>
+          document.body.classList.add("${theme}");
+        </script>
+        `
       );
     return URL.createObjectURL(new Blob([res], { type: "text/html" }));
-  }, [compiledCode, files]);
+  }, [compiledCode, files, theme]);
 
   useEffect(() => {
     setIframeUrl(getIframeUrl());
