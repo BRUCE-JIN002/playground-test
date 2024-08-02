@@ -7,6 +7,8 @@ import {
   ENTRY_FILE_NAME,
   IMPORT_MAP_FILE_NAME
 } from "../../../files";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const readonlyFilaNames = [
   ENTRY_FILE_NAME,
@@ -47,24 +49,27 @@ export default function FileNameList() {
   };
 
   return (
-    <div className={styles.tabs}>
-      {tabs.map((item, index, arr) => (
-        <FileNameItem
-          key={item + index}
-          value={item}
-          creating={creating && index === arr.length - 1}
-          actived={selectedFileName === item}
-          readonly={readonlyFilaNames.includes(item)}
-          onClick={() => setSelectedFileName(item)}
-          onEditComplete={(name: string) => handleEditComplete(name, item)}
-          onRemove={() => {
-            handleRemove(item);
-          }}
-        />
-      ))}
-      <div className={styles.add} onClick={addTab}>
-        +
+    <DndProvider backend={HTML5Backend}>
+      <div className={styles.tabs}>
+        {tabs.map((tab, index, arr) => (
+          <FileNameItem
+            index={index}
+            key={tab + index}
+            value={tab}
+            creating={creating && index === arr.length - 1}
+            actived={selectedFileName === tab}
+            readonly={readonlyFilaNames.includes(tab)}
+            onClick={() => setSelectedFileName(tab)}
+            onEditComplete={(name: string) => handleEditComplete(name, tab)}
+            onRemove={() => {
+              handleRemove(tab);
+            }}
+          />
+        ))}
+        <div className={styles.add} onClick={addTab}>
+          +
+        </div>
       </div>
-    </div>
+    </DndProvider>
   );
 }

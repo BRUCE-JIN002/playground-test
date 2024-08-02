@@ -23,6 +23,7 @@ export interface PlaygroundContext {
   addFile: (fileName: string) => void;
   removeFile: (fileName: string) => void;
   updateFileName: (oldFieldName: string, newFieldName: string) => void;
+  swapFile: (index1: number, index2: number) => void;
 }
 
 export const PlaygroundContext = createContext<PlaygroundContext>({
@@ -83,6 +84,16 @@ export const PlaygroundProvider = (props: PropsWithChildren) => {
     setFiles([...files]);
   };
 
+  const swapFile = (index1: number, index2: number) => {
+    if (index1 < 0 || index2 < 0 || index1 === index2) {
+      return;
+    }
+    const temp = files[index1];
+    files[index1] = files[index2];
+    files[index2] = temp;
+    setFiles([...files]);
+  };
+
   useEffect(() => {
     const hash = compress(JSON.stringify(files));
     window.location.hash = hash;
@@ -95,6 +106,7 @@ export const PlaygroundProvider = (props: PropsWithChildren) => {
         selectedFileName,
         theme,
         showMinMap,
+        swapFile,
         setShowMinMap,
         toggleTheme,
         setSelectedFileName,

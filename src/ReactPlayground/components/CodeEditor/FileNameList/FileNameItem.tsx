@@ -1,9 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import classnames from "classnames";
 import styles from "./index.module.scss";
 import { Popconfirm } from "antd";
+import { useDrag, useDrop } from "react-dnd";
+import { PlaygroundContext } from "../../../contexts/PlaygroundContext";
+import { useMount } from "ahooks";
+
+interface DragData {
+  id: string;
+  index: number;
+}
+
 export interface FileNameItemProps {
+  index: number;
   value: string;
   actived: boolean;
   creating: boolean;
@@ -17,6 +27,7 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
   props: FileNameItemProps
 ) => {
   const {
+    index,
     value,
     actived = false,
     creating,
@@ -28,6 +39,8 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
   const [name, setName] = useState(value);
   const [editing, setEditing] = useState<boolean>(creating);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { swapFile } = useContext(PlaygroundContext);
+  const ref = useRef(null);
 
   const handleDoubleClick = () => {
     setEditing(true);
@@ -47,11 +60,36 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
     }
   }, [creating]);
 
+  const [, drag] = useDrag({
+    type: "card",
+    item: {
+      id: value,
+      index: index
+    }
+  });
+
+  const [{ isOver }, drop] = useDrop({
+    accept: "card",
+    drop(item: DragData) {
+      swapFile(index, item.index);
+    },
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver()
+    })
+  });
+
+  useMount(() => {
+    drag(ref);
+    drop(ref);
+  });
+
   return (
     <div
+      ref={ref}
       className={classnames(
         styles["tab-item"],
-        actived ? styles.actived : null
+        { [styles.actived]: actived },
+        { [styles.hihgtlingt]: isOver }
       )}
       onClick={onClick}
     >
