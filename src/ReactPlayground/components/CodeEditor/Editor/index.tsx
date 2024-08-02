@@ -3,6 +3,7 @@ import MonacoEditor, { EditorProps, Monaco } from "@monaco-editor/react";
 import { createATA } from "./ata";
 import { PlaygroundContext, Theme } from "../../../contexts/PlaygroundContext";
 import { useContext } from "react";
+import styles from "./index.module.scss";
 
 export interface EditorFile {
   name: string;
@@ -52,6 +53,7 @@ export default function Editor(props: Props) {
 
   return (
     <MonacoEditor
+      loading={<div className={styles.loader} />}
       height="100%"
       path={file?.name}
       language={file?.language}
