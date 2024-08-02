@@ -21,7 +21,7 @@ const AntdConfigContextProvider = ({
                 colorText: "#fff",
                 fontSize: 12
               }
-            : {},
+            : { fontSize: 12 },
         components: {
           Switch: {
             colorPrimary: "skyblue",

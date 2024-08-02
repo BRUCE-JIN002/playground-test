@@ -114,9 +114,9 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
           </span>
           {!readonly ? (
             <Popconfirm
-              title="确认删除该文件吗？"
-              okText="确定"
-              cancelText="取消"
+              title="Confirm to delete?"
+              okText="confirm"
+              cancelText="cancel"
               showCancel={false}
               onConfirm={(e) => {
                 e?.stopPropagation();

@@ -68,7 +68,7 @@ export default function FileNameList() {
             }}
           />
         ))}
-        <div className={styles.add} onClick={addTab}>
+        <div title="Add File" className={styles.add} onClick={addTab}>
           +
         </div>
       </div>

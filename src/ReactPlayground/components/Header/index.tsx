@@ -4,8 +4,10 @@ import logo from "./icons/logo.svg";
 import styles from "./index.module.scss";
 import {
   DownloadOutlined,
+  GithubOutlined,
   MacCommandOutlined,
   MoonOutlined,
+  ReloadOutlined,
   ShareAltOutlined,
   SunOutlined
 } from "@ant-design/icons";
@@ -29,7 +31,7 @@ export default function Header() {
       Math.max(window.innerWidth, window.innerWidth - x),
       Math.max(window.innerHeight, window.innerHeight - y)
     );
-    transiton?.ready.then(() => {
+    transiton.ready.then(() => {
       document.documentElement.animate(
         {
           clipPath: [
@@ -64,33 +66,49 @@ export default function Header() {
         </div>
         <Switch
           checked={showMinMap}
-          checkedChildren="缩略图"
-          unCheckedChildren="缩略图"
+          checkedChildren="MiniMap"
+          unCheckedChildren="MiniMap"
           onChange={() => setShowMinMap(!showMinMap)}
         />
         <span
-          title={theme === "light" ? "切换暗色主题" : "切换亮色主题"}
+          title={theme === "light" ? "Dark" : "Light"}
           className={styles.operation}
           onClick={onToggleTheme}
         >
           {theme === "light" ? <MoonOutlined /> : <SunOutlined />}
         </span>
         <ShareAltOutlined
-          title="分享链接"
+          title="Share Link"
           className={styles.operation}
           onClick={() => {
             copy(window.location.href);
-            message.success("分享链接已复制");
+            message.success("Shared Link Coppied!");
+          }}
+        />
+        <ReloadOutlined
+          title="Reload"
+          className={styles.operation}
+          onClick={() => {
+            window.location.reload();
           }}
         />
         <DownloadOutlined
-          title="下载代码"
+          title="Download Files"
           className={styles.operation}
           onClick={async () => {
             await downloadFiles(files);
-            message.success("下载完成");
+            message.success("Download Files Success!");
           }}
         />
+
+        <a
+          href="https://github.com/BRUCE-JIN002/playground-test.git"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.github}
+        >
+          <GithubOutlined title="Github" className={styles.operation} />
+        </a>
       </div>
     </div>
   );

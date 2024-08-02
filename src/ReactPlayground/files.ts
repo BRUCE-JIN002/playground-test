@@ -5,11 +5,11 @@ import App from "./template/App.tsx?raw";
 import main from "./template/main.tsx?raw";
 import { fileName2Language } from "./utils";
 
-// app 文件名
+// app fileName
 export const APP_COMPONENT_FILE_NAME = "App.tsx";
-// esm 模块映射文件名
+// esm modules map files name
 export const IMPORT_MAP_FILE_NAME = "import-map.json";
-// app 入口文件名
+// app entry file name
 export const ENTRY_FILE_NAME = "main.tsx";
 
 export const initFiles: File[] = [
