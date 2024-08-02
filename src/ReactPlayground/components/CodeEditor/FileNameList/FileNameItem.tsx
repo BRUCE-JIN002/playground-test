@@ -114,18 +114,21 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
           </span>
           {!readonly ? (
             <Popconfirm
-              title="确认删除改文件吗？"
+              title="确认删除该文件吗？"
               okText="确定"
               cancelText="取消"
+              showCancel={false}
               onConfirm={(e) => {
                 e?.stopPropagation();
                 onRemove();
               }}
-              showCancel={false}
             >
               <span
                 className={styles.remove}
-                style={{ marginLeft: 5, display: "flex" }}
+                style={{ marginLeft: 5, display: "flex", zIndex: 9 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
               >
                 <svg width="12" height="12" viewBox="0 0 24 24">
                   <line stroke="#999" x1="18" y1="6" x2="6" y2="18"></line>
