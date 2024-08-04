@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 
 import classnames from "classnames";
 import styles from "./index.module.scss";
-import { Popconfirm } from "antd";
+import { Popconfirm, message } from "antd";
 import { useDrag, useDrop } from "react-dnd";
 import { PlaygroundContext } from "../../../contexts/PlaygroundContext";
 import { useMount } from "ahooks";
@@ -39,8 +39,12 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
   const [name, setName] = useState(value);
   const [editing, setEditing] = useState<boolean>(creating);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { swapFile } = useContext(PlaygroundContext);
+  const { swapFile, files } = useContext(PlaygroundContext);
   const ref = useRef(null);
+
+  const hasExistFile = files.find(
+    (item, idx) => item.name === name && idx !== index
+  );
 
   const handleDoubleClick = () => {
     setEditing(true);
@@ -49,9 +53,14 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
     });
   };
 
-  const handleInputBlur = () => {
-    setEditing(false);
-    onEditComplete(name);
+  const handleInputDone = () => {
+    if (!hasExistFile) {
+      setEditing(false);
+      onEditComplete(name);
+    } else {
+      message.error(`File name ${name} already exists!`);
+      inputRef.current?.focus();
+    }
   };
 
   useEffect(() => {
@@ -61,7 +70,7 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
   }, [creating]);
 
   const [, drag] = useDrag({
-    type: "card",
+    type: "File",
     item: {
       id: value,
       index: index
@@ -69,7 +78,7 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
   });
 
   const [{ isOver }, drop] = useDrop({
-    accept: "card",
+    accept: "File",
     drop(item: DragData) {
       swapFile(index, item.index);
     },
@@ -92,26 +101,24 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
         { [styles.hightlight]: isOver }
       )}
       onClick={onClick}
+      onDoubleClick={!readonly ? handleDoubleClick : () => {}}
     >
       {editing ? (
         <input
           ref={inputRef}
-          className={styles["tabs-item-input"]}
+          className={classnames(styles["tabs-item-input"], {
+            [styles["tabs-item-input-error"]]: hasExistFile
+          })}
           value={name}
           onChange={(e) => setName(e.target.value)}
-          onBlur={handleInputBlur}
+          onBlur={handleInputDone}
           onKeyDown={(e) => {
-            e.key === "Enter" && handleInputBlur();
+            e.key === "Enter" && handleInputDone();
           }}
         />
       ) : (
         <>
-          <span
-            className={styles["tabs-item-name"]}
-            onDoubleClick={!readonly ? handleDoubleClick : () => {}}
-          >
-            {name}
-          </span>
+          <span className={styles["tabs-item-name"]}>{name}</span>
           {!readonly ? (
             <Popconfirm
               title="Confirm to delete?"
