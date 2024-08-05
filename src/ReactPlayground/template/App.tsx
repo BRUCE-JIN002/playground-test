@@ -1,4 +1,5 @@
 import { useState } from "react";
+import classNames from "classnames";
 import "./App.css";
 
 function App() {
@@ -11,7 +12,9 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <div>{count !== 0 && "You've clicked the button! 🎉"}</div>
+        <div className={classNames("message", count !== 0 ? "active" : "")}>
+          {count !== 0 && "You've clicked the button! 🎉"}
+        </div>
       </div>
     </>
   );

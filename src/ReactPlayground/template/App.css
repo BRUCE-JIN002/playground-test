@@ -56,6 +56,15 @@ button:hover {
   background-color: skyblue;
 }
 
+.message {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease-in-out;
+}
+.active {
+  max-height: 22px;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
