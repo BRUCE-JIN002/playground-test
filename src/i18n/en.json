@@ -1,0 +1,26 @@
+{
+  "header": {
+    "formatter": "Formatter",
+    "minimap": "MiniMap",
+    "language": "Language",
+    "theme": "Theme",
+    "linkCopy": "Link copy",
+    "linkCoppied": "Shared Link Coppied",
+    "reload": "Reload",
+    "dark": "Dark",
+    "light": "Light",
+    "chinese": "Chinese(Simplified)",
+    "english": "English(EN)",
+    "downloadFile": "Download Files",
+    "github": "GitHub",
+    "confirmToDelete": "Confirm to delete?",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "fileExists": "The same name file already exists!",
+    "wentWrong": "Some Thing Went Wrong",
+    "checkAndResubmit": "Please check and modify the following information before resubmitting.",
+    "downloadSuccess": "Download Files Success!",
+    "checkConsole": "Please Check The Console",
+    "addFile": "Add new File"
+  }
+}

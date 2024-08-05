@@ -9,6 +9,7 @@ import {
 } from "../../../files";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useTranslation } from "react-i18next";
 
 const readonlyFilaNames = [
   ENTRY_FILE_NAME,
@@ -27,6 +28,7 @@ export default function FileNameList() {
   } = useContext(PlaygroundContext);
   const [tabs, setTabs] = useState([""]);
   const [creating, setCreating] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => setTabs(files.map((item) => item.name)), [files]);
 
@@ -70,7 +72,11 @@ export default function FileNameList() {
             }}
           />
         ))}
-        <div title="Add File" className={styles.add} onClick={addTab}>
+        <div
+          title={t("header.addFile")}
+          className={styles.add}
+          onClick={addTab}
+        >
           +
         </div>
       </div>

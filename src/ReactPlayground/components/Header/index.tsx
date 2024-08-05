@@ -5,6 +5,7 @@ import styles from "./index.module.scss";
 import {
   DownloadOutlined,
   GithubOutlined,
+  GlobalOutlined,
   MacCommandOutlined,
   MoonOutlined,
   ReloadOutlined,
@@ -12,12 +13,15 @@ import {
   SunOutlined
 } from "@ant-design/icons";
 import copy from "copy-to-clipboard";
-import { Switch, message } from "antd";
+import { Dropdown, Switch, message } from "antd";
 import { downloadFiles } from "../../utils";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../i18n/configs";
 
 export default function Header() {
   const { theme, toggleTheme, files, showMinMap, setShowMinMap } =
     useContext(PlaygroundContext);
+  const { t } = useTranslation();
 
   const onToggleTheme = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     if (!("startViewTransition" in document)) {
@@ -56,7 +60,7 @@ export default function Header() {
       </div>
       <div className={styles.links}>
         <div className={styles.shortcutContainer}>
-          <div>Formatter</div>
+          <div>{t("header.formatter")}</div>
           <div className={styles.shortcut}>
             <MacCommandOutlined className={styles.keycode} />
             <div className={styles.keycode} style={{ marginLeft: 3 }}>
@@ -66,38 +70,58 @@ export default function Header() {
         </div>
         <Switch
           checked={showMinMap}
-          checkedChildren="MiniMap"
-          unCheckedChildren="MiniMap"
+          checkedChildren={t("header.minimap")}
+          unCheckedChildren={t("header.minimap")}
           onChange={() => setShowMinMap(!showMinMap)}
         />
         <span
-          title={theme === "light" ? "Dark" : "Light"}
+          title={theme === "light" ? t("header.dark") : t("header.light")}
           className={styles.operation}
           onClick={onToggleTheme}
         >
           {theme === "light" ? <MoonOutlined /> : <SunOutlined />}
         </span>
+        <Dropdown
+          menu={{
+            onClick: ({ key }) => {
+              i18n.changeLanguage(key);
+            },
+            items: [
+              {
+                key: "zh",
+                label: <span>{t("header.chinese")}</span>
+              },
+              {
+                key: "en",
+                label: <span>{t("header.english")}</span>
+              }
+            ]
+          }}
+          placement="bottom"
+        >
+          <GlobalOutlined className={styles.operation} />
+        </Dropdown>
         <ShareAltOutlined
-          title="Share Link"
+          title={t("header.linkCopy")}
           className={styles.operation}
           onClick={() => {
             copy(window.location.href);
-            message.success("Shared Link Coppied!");
+            message.success(t("header.linkCoppied"));
           }}
         />
         <ReloadOutlined
-          title="Reload"
+          title={t("header.reload")}
           className={styles.operation}
           onClick={() => {
             window.location.reload();
           }}
         />
         <DownloadOutlined
-          title="Download Files"
+          title={t("header.downloadFile")}
           className={styles.operation}
           onClick={async () => {
             await downloadFiles(files);
-            message.success("Download Files Success!");
+            message.success(t("header.downloadFile"));
           }}
         />
 
@@ -107,7 +131,10 @@ export default function Header() {
           rel="noopener noreferrer"
           className={styles.github}
         >
-          <GithubOutlined title="Github" className={styles.operation} />
+          <GithubOutlined
+            title={t("header.github")}
+            className={styles.operation}
+          />
         </a>
       </div>
     </div>

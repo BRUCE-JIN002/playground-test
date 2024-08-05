@@ -6,6 +6,7 @@ import { Popconfirm, message } from "antd";
 import { useDrag, useDrop } from "react-dnd";
 import { PlaygroundContext } from "../../../contexts/PlaygroundContext";
 import { useMount } from "ahooks";
+import { useTranslation } from "react-i18next";
 
 interface DragData {
   id: string;
@@ -41,6 +42,7 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
   const inputRef = useRef<HTMLInputElement>(null);
   const { swapFile, files } = useContext(PlaygroundContext);
   const ref = useRef(null);
+  const { t } = useTranslation();
 
   const hasExistFile = files.find(
     (item, idx) => item.name === name && idx !== index
@@ -58,7 +60,7 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
       setEditing(false);
       onEditComplete(name);
     } else {
-      message.error(`File name ${name} already exists!`);
+      message.error(t("header.fileExists"));
       inputRef.current?.focus();
     }
   };
@@ -121,9 +123,9 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
           <span className={styles["tabs-item-name"]}>{name}</span>
           {!readonly ? (
             <Popconfirm
-              title="Confirm to delete?"
-              okText="confirm"
-              cancelText="cancel"
+              title={t("header.confirmToDelete")}
+              okText={t("header.confirm")}
+              cancelText={t("header.cancel")}
               showCancel={false}
               onConfirm={(e) => {
                 e?.stopPropagation();
