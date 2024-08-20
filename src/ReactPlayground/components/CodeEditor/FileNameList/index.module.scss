@@ -61,6 +61,9 @@
 .tabs-item-name {
   text-wrap: nowrap;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .tabs-item-close {

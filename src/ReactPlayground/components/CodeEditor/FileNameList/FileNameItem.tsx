@@ -7,6 +7,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { PlaygroundContext } from "../../../contexts/PlaygroundContext";
 import { useMount } from "ahooks";
 import { useTranslation } from "react-i18next";
+import { getFileIcon } from "../../Icon/FileIcons";
 
 interface DragData {
   id: string;
@@ -120,7 +121,10 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
         />
       ) : (
         <>
-          <span className={styles["tabs-item-name"]}>{name}</span>
+          <span className={classnames(styles["tabs-item-name"])}>
+            {getFileIcon(name)}
+            {name}
+          </span>
           {!readonly ? (
             <Popconfirm
               title={t("header.confirmToDelete")}

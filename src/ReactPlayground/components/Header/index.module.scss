@@ -19,6 +19,12 @@
     img {
       height: 24px;
       margin-right: 10px;
+
+      &:hover {
+        cursor: pointer;
+        filter: drop-shadow((0 0 10px #61dafbaa));
+        animation: spin 5s linear infinite;
+      }
     }
   }
 
@@ -49,6 +55,7 @@
       border-radius: 5px;
       background-color: var(--shortcut-bg);
       color: #fff;
+      cursor: default;
 
       .shortcut {
         display: flex;
@@ -66,5 +73,15 @@
         }
       }
     }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

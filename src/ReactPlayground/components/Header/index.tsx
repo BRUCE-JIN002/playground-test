@@ -102,7 +102,7 @@ export default function Header() {
           <GlobalOutlined className={styles.operation} />
         </Dropdown>
         <ShareAltOutlined
-          title={t("header.linkCopy")}
+          title={t("header.shareLink")}
           className={styles.operation}
           onClick={() => {
             copy(window.location.href);
