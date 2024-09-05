@@ -31,10 +31,18 @@
     cursor: pointer;
     align-items: center;
     border-bottom: 3px solid transparent;
+    color: var(--filename);
 
     &.actived {
-      color: skyblue;
-      border-bottom: 3px solid skyblue;
+      color: var(--activefile);
+      background-color: var(--file);
+      border-bottom: 3px solid #62d5fa;
+      border-left: 0.5px solid var(--box-shadow);
+      border-right: 0.5px solid var(--box-shadow);
+    }
+
+    &:not(.actived):hover {
+      background-color: var(--file);
     }
     &:hover {
       background-color: var(--file);

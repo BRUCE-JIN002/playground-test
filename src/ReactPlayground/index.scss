@@ -13,6 +13,8 @@
   --box-shadow: #00000015;
   --shortcut-bg: #bebcbcb3;
   --shortcut-shadow: #00000020;
+  --filename: #444;
+  --activefile: #000;
 }
 
 .dark {
@@ -26,6 +28,8 @@
   --box-shadow: #1e1e1e;
   --shortcut-bg: #2d2c2c;
   --shortcut-shadow: #e0e0e060;
+  --filename: #ccc;
+  --activefile: #fff;
 }
 
 .wrapper {
