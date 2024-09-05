@@ -1,5 +1,5 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { PlaygroundContext } from "../../contexts/PlaygroundContext";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { usePlayGroundContext } from "../../contexts/PlaygroundContext";
 import iframeRaw from "./iframe.html?raw";
 import { Message } from "../Message";
 import CompilerWorker from "./compiler.worker?worker";
@@ -14,7 +14,7 @@ interface MessageData {
 }
 
 export default function Preview() {
-  const { files, theme } = useContext(PlaygroundContext);
+  const { files, theme } = usePlayGroundContext();
   const [compiledCode, setCompiledCode] = useState("");
   const [error, setError] = useState("");
 

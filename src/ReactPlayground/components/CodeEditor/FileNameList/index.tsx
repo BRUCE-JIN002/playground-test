@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { PlaygroundContext } from "../../../contexts/PlaygroundContext";
+import { useEffect, useState } from "react";
+import { usePlayGroundContext } from "../../../contexts/PlaygroundContext";
 import styles from "./index.module.scss";
 import { FileNameItem } from "./FileNameItem";
 import {
@@ -25,7 +25,7 @@ export default function FileNameList() {
     removeFile,
     updateFileName,
     setSelectedFileName
-  } = useContext(PlaygroundContext);
+  } = usePlayGroundContext();
   const [tabs, setTabs] = useState([""]);
   const [creating, setCreating] = useState(false);
   const { t } = useTranslation();

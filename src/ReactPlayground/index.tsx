@@ -3,14 +3,13 @@ import "allotment/dist/style.css";
 import Header from "./components/Header";
 import CodeEditor from "./components/CodeEditor";
 import Preview from "./components/Preview";
-import { PlaygroundContext } from "./contexts/PlaygroundContext";
-import { useContext } from "react";
+import { usePlayGroundContext } from "./contexts/PlaygroundContext";
 import classNames from "classnames";
-import "./index.scss";
 import AntdConfigContextProvider from "./contexts/AntdConfigContext";
+import "./index.scss";
 
 export default function ReactPlayground() {
-  const { theme } = useContext(PlaygroundContext);
+  const { theme } = usePlayGroundContext();
 
   return (
     <AntdConfigContextProvider>

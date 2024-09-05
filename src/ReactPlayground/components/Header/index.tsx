@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { PlaygroundContext } from "../../contexts/PlaygroundContext";
+import { usePlayGroundContext } from "../../contexts/PlaygroundContext";
 import logo from "./icons/logo.svg";
 import styles from "./index.module.scss";
 import {
@@ -20,7 +19,7 @@ import i18n from "../../../i18n/configs";
 
 export default function Header() {
   const { theme, toggleTheme, files, showMinMap, setShowMinMap } =
-    useContext(PlaygroundContext);
+    usePlayGroundContext();
   const { t } = useTranslation();
 
   const onToggleTheme = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {

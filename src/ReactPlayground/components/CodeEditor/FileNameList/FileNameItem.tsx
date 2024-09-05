@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import classnames from "classnames";
 import styles from "./index.module.scss";
 import { Popconfirm, message } from "antd";
 import { useDrag, useDrop } from "react-dnd";
-import { PlaygroundContext } from "../../../contexts/PlaygroundContext";
+import { usePlayGroundContext } from "../../../contexts/PlaygroundContext";
 import { useMount } from "ahooks";
 import { useTranslation } from "react-i18next";
 import { getFileIcon } from "../../Icon/FileIcons";
@@ -41,7 +41,7 @@ export const FileNameItem: React.FC<FileNameItemProps> = (
   const [name, setName] = useState(value);
   const [editing, setEditing] = useState<boolean>(creating);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { swapFile, files } = useContext(PlaygroundContext);
+  const { swapFile, files } = usePlayGroundContext();
   const ref = useRef(null);
   const { t } = useTranslation();
 

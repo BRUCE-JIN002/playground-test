@@ -1,13 +1,11 @@
-import { useContext } from "react";
 import Editor from "./Editor";
 import FileNameList from "./FileNameList";
-import { PlaygroundContext } from "../../contexts/PlaygroundContext";
+import { usePlayGroundContext } from "../../contexts/PlaygroundContext";
 import _ from "lodash";
 import styles from "./index.module.scss";
 
 export default function CodeEditor() {
-  const { files, theme, selectedFileName, setFiles } =
-    useContext(PlaygroundContext);
+  const { files, theme, selectedFileName, setFiles } = usePlayGroundContext();
   const file = files.find((file) => file.name === selectedFileName)!;
 
   const onEditorChange = _.debounce((value?: string) => {

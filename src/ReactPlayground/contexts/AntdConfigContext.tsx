@@ -1,13 +1,12 @@
 import { ConfigProvider } from "antd";
-import { useContext } from "react";
-import { PlaygroundContext } from "./PlaygroundContext";
+import { usePlayGroundContext } from "./PlaygroundContext";
 
 const AntdConfigContextProvider = ({
   children
 }: {
   children: React.ReactNode;
 }) => {
-  const { theme } = useContext(PlaygroundContext);
+  const { theme } = usePlayGroundContext();
 
   return (
     <ConfigProvider

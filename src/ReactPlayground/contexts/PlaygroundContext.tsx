@@ -1,4 +1,10 @@
-import { PropsWithChildren, createContext, useEffect, useState } from "react";
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { compress, fileName2Language, uncompress } from "../utils";
 import { initFiles } from "../files";
 import { useToggle } from "ahooks";
@@ -40,6 +46,8 @@ const getFilesFromUrl = () => {
   }
   return files;
 };
+
+export const usePlayGroundContext = () => useContext(PlaygroundContext);
 
 export const PlaygroundProvider = (props: PropsWithChildren) => {
   const { children } = props;
